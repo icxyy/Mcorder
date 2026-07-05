@@ -1,0 +1,52 @@
+plugins {
+	// Loom 1.17+ is required for the 26.x game versions / Java 25 toolchain.
+	id 'fabric-loom' version '1.17-SNAPSHOT'
+	id 'maven-publish'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+	archivesName = project.archives_base_name
+}
+
+repositories {
+	// Add mod-dependency mavens here if needed.
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	// Yarn is NOT published for 26.2 — the 26.x line uses official Mojang mappings.
+	mappings loom.officialMojangMappings()
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+}
+
+processResources {
+	inputs.property "version", project.version
+	filesMatching("fabric.mod.json") {
+		expand "version": project.version
+	}
+}
+
+def targetJava = 25
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = targetJava
+}
+
+java {
+	// 26.1+ requires Java 25. Use a toolchain so Gradle can run on JDK 21
+	// while compiling the mod to Java 25 bytecode.
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(targetJava)
+	}
+	withSourcesJar()
+}
+
+jar {
+	from("LICENSE") {
+		rename { "${it}_${project.archivesName.get()}" }
+	}
+}

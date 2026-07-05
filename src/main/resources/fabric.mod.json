@@ -1,0 +1,28 @@
+{
+	"schemaVersion": 1,
+	"id": "mcorder",
+	"version": "${version}",
+	"name": "Mcorder",
+	"description": "An in-game screen recorder with real-time audio capture.",
+	"authors": [
+		"Iceyy"
+	],
+	"contact": {},
+	"license": "CC0-1.0",
+	"icon": "assets/mcorder/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"client": [
+			"com.mcorder.McorderClient"
+		]
+	},
+	"mixins": [
+		"mcorder.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": ">=26.2",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}

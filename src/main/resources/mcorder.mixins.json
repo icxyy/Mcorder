@@ -1,0 +1,19 @@
+{
+	"required": true,
+	"package": "com.mcorder.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"AL10Mixin"
+	],
+	"client": [
+		"GameRendererMixin",
+		"InGameHudMixin",
+		"ScreenMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}
